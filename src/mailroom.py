@@ -14,7 +14,7 @@ def choose_path():
     input_prompt += ' "Send a Thank You".  If you would like to see a'
     input_prompt += ' donation report, enter "Create a Report".'
     input_prompt += ' If at any time you wish to return to this menu,'
-    input_prompt += ' enter "menu".  Otherwise, enter "Quit" to quit.'
+    input_prompt += ' enter "menu".  Otherwise, enter "Quit" to quit: '
     choice = input(input_prompt)
     if choice.lower() == 'create a report':
         create_a_report()
@@ -27,39 +27,65 @@ def choose_path():
 def send_thank_you():
     """Create a report with full donor list with name and donation stats."""
     input_prompt = 'If you want to see a list of donors, enter "list".'
-    input_prompt += 'Otherwise, enter a donor name.'
+    input_prompt += '  Otherwise, enter a donor name: '
     choice = input(input_prompt)
     if choice.lower() == 'list':
         for donor in sorted(list(donors.keys())):
             donor = donor.split(' ')
             # The line below breaks prints capitalized first/last name
             print (' '.join(list(map(lambda x: x.capitalize(), donor))))
-    elif choice.lower == 'menu':
+    elif choice.lower() == 'menu':
         choose_path()
     else:
         if choice.lower() in donors:
-            print ('{0} has already donated.  Enter new donation.'.format(choice))
-            add_donation(choice.lower())
+            print ('{0} has already donated.  Enter new donation: '.format(choice))
+            donation = add_donation(choice.lower())
+            print_email(choice, donation)
+            choose_path()
         else:
-            print ('{0} has been added.  Enter new donation.'.format(choice))
+            print ('{0} has been added.  Enter new donation: '.format(choice))
             donors[choice.lower()] = []
-            add_donation(choice.lower())
+            donation = add_donation(choice.lower())
+            print_email(choice, donation)
+            choose_path()
+
 
 def add_donation(donor):
-    """Add donation for existing donor,"""
-    input_prompt = 'How much is the new donation worth?'
+    """Add donation for existing donor."""
+    input_prompt = 'How much is the new donation worth? '
     donation = input(input_prompt)
+    if donation.lower() == 'menu':
+        choose_path()
     while not donation.isnumeric():
-        input_prompt = 'Please enter a valid number'
+        input_prompt = 'Please enter a valid number: '
         donation = input(input_prompt)
     donors[donor].append(donation)
+    return donation
 
-
+def print_email(donor, donation):
+    email = "Dear {0},"
+    email += '\n \n \n'
+    email += 'Thanks so much for your donation of ${1}.  We love you!'
+    email += ' Please feel free to donate again.'
+    email += '\n \n \n'
+    email += 'Love, \n CodeFellows'
+    print (email.format(donor, donation))
 
 
 def create_a_report():
-    """Show donor list and allow for new donations to be entered."""
-    """Finally, send thank you."""
-    pass
+    """Print donation report, with total, count, average."""
+    print ('Donor Name------Count-----Average-----Sum')
+    print ('-'*70)
+    donor_ordered = [[k, sum(v)] for k, v in donors.items()]
+    donor_ordered.sort(key=lambda x: -x[1])
+    for donor in donor_ordered:
+        name  = donor[0].split(' ')
+        name = ' '.join(list(map(lambda x: x.capitalize(), name)))
+        print ('{0}{1}{2}{3}{4}'.format(' ' * 3,
+                                         name,
+                                         ' '* 10,
+                                         ' ',
+                                         ' '))
 
-send_thank_you()
+#send_thank_you()
+create_a_report()
