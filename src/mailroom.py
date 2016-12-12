@@ -117,28 +117,6 @@ def create_a_report():
                                                       donation_sum)
     return output
 
-"""
-def create_a_report():
-    print ('Donor Name--------------Count-----Average--------Sum')
-    print ('-' * 62)
-    donor_ordered = [[k, sum(v)] for k, v in donors.items()]
-    donor_ordered.sort(key=lambda x: -x[1])
-    for donor in donor_ordered:
-        donations = donors[donor[0]]
-        donation_count = str(len(donations))
-        donation_sum = str(round(sum(donations), 2))
-        donation_avg = str(round(float(sum(donations)) / len(donations), 2))
-        name = donor[0].split(' ')
-        name = ' '.join(list(map(lambda x: x.capitalize(), name)))
-
-        print ('{0}{1}{2}{3}{4}{5}{6}{7}'.format(' ' * 3,
-                                                 name,
-                                                 ' ' * (23 - len(name)),
-                                                 str(len(donations)),
-                                                 ' ' * (10 - len(donation_count)),
-                                                 donation_avg,
-                                                 ' ' * (13 - len(donation_avg)),
-                                                 donation_sum)) """
 
 if __name__ == '__main__':
     main()
