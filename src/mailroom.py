@@ -11,18 +11,19 @@ donors = {'jordan schatzman': [100, 200, 400, 50.6],
 
 def choose_path():
     """Allow the user to begin the program."""
-    input_prompt = 'If you want to submit a thank you, enter'
-    input_prompt += ' "Send a Thank You".  If you would like to see a'
-    input_prompt += ' donation report, enter "Create a Report".'
-    input_prompt += ' If at any time you wish to return to this menu,'
-    input_prompt += ' enter "menu".  Otherwise, enter "Quit" to quit: '
+    print('If you want to submit a thank you, enter:')
+    print('[T] to send a [T]hank you')
+    print('[R] to show a donation [R]eport')
+    print('If at any time you wish to return to this menu,')
+    print('enter "menu".  Otherwise, enter "Quit" to quit')
+    input_prompt = "> "
     valid = True
     while valid:
         choice = input(input_prompt)
-        if choice.lower() == 'create a report':
+        if choice.lower() == 'r':
             create_a_report()
-        elif choice.lower() == 'send a thank you':
-            get_donation_info()
+        elif choice.lower() == 't':
+            get_donor()
         elif choice.lower() == 'quit':
             exit()
         else:
@@ -33,28 +34,37 @@ choice = ""
 donation = ""
 
 
-def get_donation_info():
-    """Create variables to pass to send_thank_you()."""
+def get_donor():
+    """Create donor to pass to send_thank_you()."""
     global choice
-    global donation
     input_prompt = 'If you want to see a list of donors, enter "list".'
     input_prompt += '  Otherwise, enter a donor name: '
     choice = input(input_prompt)
-    if choice.lower() == 'list':
+    if choice.lower() == 'menu':
+        choose_path()
+    elif choice.lower() == 'quit':
+        exit()
+    elif choice.lower() == 'list':
         for donor in sorted(list(donors.keys())):
             donor = donor.split(' ')
             # The line below breaks prints capitalized first/last names
             print (' '.join(list(map(lambda x: x.capitalize(), donor))))
-    else:
-        print("Enter donation amount: ")
-        donation = int(input("> "))
-        # while not donation.isnumeric():
-        #     input_prompt = 'Please enter a valid number: '
-        #     donation = input(input_prompt)
+        get_donor()
+    get_donation_amt()
 
-        print(donors)
-        add_donation()
-        print(donors)
+
+def get_donation_amt():
+    """Create donation amount variable."""
+    global donation
+    print("Enter donation amount: ")
+    donation = input("> ")
+    while not isinstance(donation, int) or not isinstance(donation, float):
+        input_prompt = 'Please enter a valid number: '
+        donation = input(input_prompt)
+
+    print(donors)
+    add_donation()
+    print(donors)
 
 
 def send_thank_you():
@@ -66,8 +76,8 @@ def send_thank_you():
 def add_donation():
     """Add donation for existing donor."""
     if choice.lower() in donors:
-        print ('{choice} has already donated. Adding new donation.')
-        donors[choice].append(float(donation))
+        print("{} has already donated. Adding new donation.".format(choice))
+        donors[str(choice)].append(float(donation))
         print_email(choice, donation)
     else:
         print ('Adding {choice} and donation amount to the donors list.')
@@ -108,6 +118,7 @@ def create_a_report():
                                                  donation_avg,
                                                  ' ' * (13 - len(donation_avg)),
                                                  donation_sum))
+    choose_path()
 
 if __name__ == '__main__':
     choose_path()
