@@ -59,6 +59,7 @@ def test_print_email():
     email_test2 += 'Love, \n CodeFellows\n\n\n'
     assert print_email(donors, 'Jane Doe the third', 50) == email_test2
 
+
 def test_create_a_report():
     """Test the create_a_report function."""
     from mailroom import create_a_report
@@ -74,5 +75,9 @@ def test_create_a_report():
     test_report1 += '   Sally Johnson          5         50.4         252\n'
     test_report1 += '   Bob                    4         31.86        127.46\n'
     test_report1 += '   Jordan Schatzman       1         0.0          0\n'
-
     assert create_a_report(donors_test1) == test_report1
+    donors_test2 = {'jim bob smith': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10102010101]}
+    test_report2 = 'Donor Name--------------Count-----Average--------Sum\n'
+    test_report2 += ('-' * 62) + '\n'
+    test_report2 += '   Jim Bob Smith          10        1010201014.6 10102010146\n'
+    assert create_a_report(donors_test2) == test_report2

@@ -1,7 +1,7 @@
 """Mailroom Implementation.  Create thank you cards or donation reports."""
 from __future__ import unicode_literals
 
-donors = {'jordan schatzman': [0],
+donors = {'jordan schatzman': [200, 240, 45, 2, 1000],
           'rick valenzuela': [500, 300, 100, 50, 1.24],
           'sally johnson': [50, 100, 1, 2, 99],
           'jane': [39, 23, 532, 2432],
