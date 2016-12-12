@@ -10,15 +10,15 @@ donors = {'jordan schatzman': [100, 200, 400, 50.6],
 
 def main():
     """Allow the user to begin the program."""
-    input_prompt = 'If you want to submit a thank you, enter'
-    input_prompt += ' "Send a Thank You".  If you would like to see a'
-    input_prompt += ' donation report, enter "Create a Report".'
-    input_prompt += ' If at any time you wish to return to this menu,'
-    input_prompt += ' enter "menu".  Otherwise, enter "Quit" to quit: '
-    choice = input(input_prompt)
     while True:
+        input_prompt = 'If you want to submit a thank you, enter'
+        input_prompt += ' "Send a Thank You".  If you would like to see a'
+        input_prompt += ' donation report, enter "Create a Report".'
+        input_prompt += ' If at any time you wish to return to this menu,'
+        input_prompt += ' enter "menu".  Otherwise, enter "Quit" to quit: '
+        choice = input(input_prompt)
         if choice.lower() == 'create a report':
-            create_a_report()
+            print (create_a_report())
         elif choice.lower() == 'send a thank you':
             control_thank_you()
         elif choice.lower() == 'quit':
@@ -55,7 +55,7 @@ def control_thank_you():
             input_prompt += ' submit a donation'
             donation = input(input_prompt)
             new_donation = add_donation(chosen_donor, donation)
-            print (print_email(chosen_donor, donation))
+            print (print_email(chosen_donor, new_donation))
 
 
 def create_sorted_list():
@@ -80,32 +80,6 @@ def add_donation(donor, donation):
             donation = input(input_prompt)
     return donation
 
-"""
-def send_thank_you():
-    input_prompt = 'If you want to see a list of donors, enter "list".'
-    input_prompt += '  Otherwise, enter a donor name: '
-    choice = input(input_prompt)
-    if choice.lower() == 'list':
-        for donor in sorted(list(donors.keys())):
-            donor = donor.split(' ')
-            # The line below breaks prints capitalized first/last name
-            print (' '.join(list(map(lambda x: x.capitalize(), donor))))
-            send_thank_you()
-    elif choice.lower() == 'menu':
-        main()
-    else:
-        if choice.lower() in donors:
-            print ('{0} has already donated.  Enter new donation: '.format(choice))
-            donation = add_donation(choice.lower())
-            print_email(choice, donation)
-            main()
-        else:
-            print ('{0} has been added.  Enter new donation: '.format(choice))
-            donors[choice.lower()] = []
-            donation = add_donation(choice.lower())
-            print_email(choice, donation)
-            main() """
-
 
 def print_email(donor, donation):
     """Print email to console."""
@@ -119,7 +93,32 @@ def print_email(donor, donation):
 
 
 def create_a_report():
-    """Print donation report, with total, count, average."""
+    """Create a donor report with list of donors, count, average and sum."""
+    output = ''
+    output += 'Donor Name--------------Count-----Average--------Sum\n'
+    output += ('-' * 62) + '\n'
+    donor_ordered = [[k, sum(v)] for k, v in donors.items()]
+    donor_ordered.sort(key=lambda x: -x[1])
+    for donor in donor_ordered:
+        donations = donors[donor[0]]
+        donation_count = str(len(donations))
+        donation_sum = str(round(sum(donations), 2))
+        donation_avg = str(round(float(sum(donations)) / len(donations), 2))
+        name = donor[0].split(' ')
+        name = ' '.join(list(map(lambda x: x.capitalize(), name)))
+
+        output += '{0}{1}{2}{3}{4}{5}{6}{7}\n'.format(' ' * 3,
+                                                      name,
+                                                      ' ' * (23 - len(name)),
+                                                      str(len(donations)),
+                                                      ' ' * (10 - len(donation_count)),
+                                                      donation_avg,
+                                                      ' ' * (13 - len(donation_avg)),
+                                                      donation_sum)
+    return output
+
+"""
+def create_a_report():
     print ('Donor Name--------------Count-----Average--------Sum')
     print ('-' * 62)
     donor_ordered = [[k, sum(v)] for k, v in donors.items()]
@@ -139,7 +138,7 @@ def create_a_report():
                                                  ' ' * (10 - len(donation_count)),
                                                  donation_avg,
                                                  ' ' * (13 - len(donation_avg)),
-                                                 donation_sum))
+                                                 donation_sum)) """
 
 if __name__ == '__main__':
     main()
