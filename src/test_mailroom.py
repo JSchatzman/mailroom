@@ -70,14 +70,14 @@ def test_create_a_report():
                     'bob': [89, 23, 12, 3.45643]}
     test_report1 = 'Donor Name--------------Count-----Average--------Sum\n'
     test_report1 += ('-' * 62) + '\n'
-    test_report1 += '   Jane                   4         756.5        3026\n'
+    test_report1 += '   Jane                   4         756.50       3026.00\n'
     test_report1 += '   Rick Valenzuela        5         190.25       951.24\n'
-    test_report1 += '   Sally Johnson          5         50.4         252\n'
+    test_report1 += '   Sally Johnson          5         50.40        252.00\n'
     test_report1 += '   Bob                    4         31.86        127.46\n'
-    test_report1 += '   Jordan Schatzman       1         0.0          0\n'
+    test_report1 += '   Jordan Schatzman       1         0.00         0.00\n'
     assert create_a_report(donors_test1) == test_report1
-    donors_test2 = {'jim bob smith': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10102010101]}
+    donors_test2 = {'jim bob smith': [1, 2, 3, 4, 5, 6, 7, 8, 9, 101020101]}
     test_report2 = 'Donor Name--------------Count-----Average--------Sum\n'
     test_report2 += ('-' * 62) + '\n'
-    test_report2 += '   Jim Bob Smith          10        1010201014.6 10102010146\n'
+    test_report2 += '   Jim Bob Smith          10        10102014.60  101020146.00\n'
     assert create_a_report(donors_test2) == test_report2

@@ -48,6 +48,7 @@ def control_thank_you():
             donation = input(input_prompt)
             new_donation = add_donation(donors, chosen_donor, donation)
             print (print_email(donors, chosen_donor, new_donation))
+            main()
         elif choice.lower() not in donors:
             chosen_donor = choice.lower()
             donors[chosen_donor] = []
@@ -56,6 +57,7 @@ def control_thank_you():
             donation = input(input_prompt)
             new_donation = add_donation(donors, chosen_donor, donation)
             print (print_email(donors, chosen_donor, new_donation))
+            main()
 
 
 def create_sorted_list(donors):
@@ -87,7 +89,7 @@ def print_email(donors, donor, donation):
     email = "Dear {0},\n \n \n"
     email += 'Thanks so much for your donation of ${1}.  We love you!'
     email += ' Please feel free to donate again.'
-    email += 'Love, \n CodeFellows\n\n\n'
+    email += '\n \nLove, \n \n CodeFellows\n\n\n'
     return email.format(donor_capital, donation)
 
 
@@ -100,8 +102,8 @@ def create_a_report(donors):
     for donor in donor_ordered:
         donations = donors[donor[0]]
         donation_count = str(len(donations))
-        donation_sum = str(round(sum(donations), 2))
-        donation_avg = str(round(float(sum(donations)) / len(donations), 2))
+        donation_sum = str(format(sum(donations), '.2f'))
+        donation_avg = str(format(float(sum(donations)) / len(donations), '.2f'))
         name = donor[0].split(' ')
         name = ' '.join(list(map(lambda x: x.capitalize(), name)))
 
