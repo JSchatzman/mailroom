@@ -1,0 +1,36 @@
+donors = dictionary of lists i.e {jim: [1,2,3], pam: [4,5,6]}
+
+def choosepath():
+   print "do you want a thank you card or report"
+   if input  == send_thank_you
+    send_thank_you()
+   elif input == create_a_report
+    create_a_report()
+
+
+
+def send_thank_you():
+   print list of stuff tpyhat user can input
+   if input == list
+     print all donors
+     send_thank_you()
+   if input not in donors:
+      donors[input] = []
+    while True:
+      try:
+        donaton=floatorint(input)
+        donots[new_donor].append(input)
+        break
+      except:
+        pass
+    print "thanks for your donation---bye!"
+    exit()
+
+def create_a_report():
+ for k, v in donors:
+   print (with good formatting) k, len(v), sum(v), float(sum(v))/len(v)
+   exit()
+
+
+
+
